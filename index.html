@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Busuku Caleb Shihemi — Architecture Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1916;
+    --ink-light: #6b6a65;
+    --paper: #f7f5f0;
+    --paper-warm: #ede9e1;
+    --rule: rgba(26,25,22,0.12);
+    --accent: #c9a96e;
+  }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 3rem;
+    background: var(--paper);
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300; font-size: 1.15rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-light); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+  }
+  .hero-text {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 5rem 3rem;
+    border-right: 0.5px solid var(--rule);
+  }
+  .hero-eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink-light); margin-bottom: 2rem;
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300; font-size: clamp(2.8rem, 5.5vw, 5rem);
+    line-height: 1.05; letter-spacing: -0.01em;
+    margin-bottom: 1.5rem; color: var(--ink);
+  }
+  .hero-name em { font-style: italic; color: var(--ink-light); }
+  .hero-desc {
+    font-size: 0.92rem; line-height: 1.8; color: var(--ink-light);
+    max-width: 42ch; margin-bottom: 3rem;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 0.75rem;
+    font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink); text-decoration: none; border: none; background: none;
+    cursor: pointer; padding: 0;
+    transition: gap 0.25s;
+  }
+  .hero-cta:hover { gap: 1.25rem; }
+  .hero-cta-line {
+    display: inline-block; width: 2.5rem; height: 0.5px;
+    background: var(--ink); transition: width 0.25s;
+  }
+  .hero-cta:hover .hero-cta-line { width: 3.5rem; }
+
+  .hero-visual {
+    position: relative; overflow: hidden;
+    background: var(--paper-warm);
+  }
+  .hero-visual svg {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+  }
+
+  /* MARQUEE */
+  .marquee-strip {
+    border-top: 0.5px solid var(--rule);
+    border-bottom: 0.5px solid var(--rule);
+    padding: 0.85rem 0; overflow: hidden; white-space: nowrap;
+    background: var(--ink); color: var(--paper);
+  }
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 28s linear infinite;
+  }
+  .marquee-inner span {
+    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 0 2.5rem; color: rgba(247,245,240,0.55);
+  }
+  .marquee-inner span.accent { color: var(--accent); }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SECTION COMMON */
+  section { padding: 6rem 3rem; }
+  .section-label {
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink-light); margin-bottom: 3rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 0.5px; background: var(--rule);
+  }
+
+  /* WORK GRID */
+  .work-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 0.5px solid var(--rule);
+  }
+  .work-card {
+    border-right: 0.5px solid var(--rule);
+    border-bottom: 0.5px solid var(--rule);
+    overflow: hidden; cursor: pointer;
+    transition: background 0.3s;
+  }
+  .work-card:nth-child(even) { border-right: none; }
+  .work-card:hover { background: var(--paper-warm); }
+
+  .work-card-visual {
+    height: 240px; overflow: hidden;
+    background: var(--paper-warm);
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .work-card-visual svg { width: 100%; height: 100%; display: block; }
+  .work-card-meta { padding: 1.5rem; }
+  .work-card-year {
+    font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--ink-light); margin-bottom: 0.5rem;
+  }
+  .work-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300; font-size: 1.4rem;
+    color: var(--ink); margin-bottom: 0.4rem;
+  }
+  .work-card-type {
+    font-size: 0.78rem; color: var(--ink-light);
+  }
+
+  /* ABOUT SPLIT */
+  .about-split {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+    align-items: start;
+  }
+  .about-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.1; color: var(--ink); margin-bottom: 2rem;
+  }
+  .about-heading em { font-style: italic; }
+  .about-body {
+    font-size: 0.92rem; line-height: 1.85; color: var(--ink-light);
+    margin-bottom: 1.5rem;
+  }
+  .stats { display: flex; gap: 3rem; margin-top: 3rem; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300; font-size: 2.8rem; color: var(--ink);
+  }
+  .stat-label {
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-light); margin-top: 0.25rem;
+  }
+
+  /* SERVICES */
+  .services-list { display: flex; flex-direction: column; border-top: 0.5px solid var(--rule); }
+  .service-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.75rem 0;
+    border-bottom: 0.5px solid var(--rule);
+    cursor: pointer; transition: padding-left 0.25s;
+  }
+  .service-item:hover { padding-left: 1rem; }
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300; font-size: 1.5rem; color: var(--ink);
+  }
+  .service-tag {
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-light);
+  }
+
+  /* CONTACT */
+  .contact-section {
+    background: var(--ink); color: var(--paper);
+    border-top: 0.5px solid rgba(247,245,240,0.12);
+  }
+  .contact-inner {
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  .contact-big {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300; font-size: clamp(2.3rem, 5vw, 4.5rem);
+    line-height: 1.05; color: var(--paper); max-width: 16ch;
+  }
+  .contact-big em { font-style: italic; color: var(--accent); }
+  .contact-right { text-align: right; }
+  .contact-email {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300; font-size: 1.3rem;
+    color: rgba(247,245,240,0.75); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .contact-email:hover { color: var(--paper); }
+  .contact-socials { display: flex; gap: 2rem; margin-top: 2rem; justify-content: flex-end; }
+  .contact-socials a {
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(247,245,240,0.45); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .contact-socials a:hover { color: var(--paper); }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink); border-top: 0.5px solid rgba(247,245,240,0.1);
+    padding: 1.5rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer span {
+    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(247,245,240,0.3);
+  }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  /* RESPONSIVE MEDIA QUERIES */
+  @media (max-width: 900px) {
+    nav { padding: 1.5rem; }
+    section { padding: 4rem 1.5rem; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-text { border-right: none; border-bottom: 0.5px solid var(--rule); padding: 4rem 1.5rem; }
+    .hero-visual { height: 50vh; }
+    .work-grid { grid-template-columns: 1fr; }
+    .work-card { border-right: none !important; }
+    .about-split { grid-template-columns: 1fr; gap: 3rem; }
+    .contact-inner { flex-direction: column; align-items: flex-start; gap: 3rem; }
+    .contact-right { text-align: left; }
+    .contact-socials { justify-content: flex-start; }
+    footer { padding: 1.5rem; flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Busuku Caleb Shihemi</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">Philosophy</a></li>
+    <li><a href="#services">Expertise</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow">Architectural Designer &amp; Visualizer</p>
+    <h1 class="hero-name">Balancing<br/><em>heritage</em><br/>with innovation.</h1>
+    <p class="hero-desc">An architectural practice exploring the fluid transition between sustainable vernacular methodologies and clean, modern structures.</p>
+    <a class="hero-cta" href="#work">
+      <span class="hero-cta-line"></span>
+      View Selected Projects
+    </a>
+  </div>
+  <div class="hero-visual">
+    <svg viewBox="0 0 600 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <rect fill="#ede9e1" width="600" height="700"/>
+      <line x1="0" y1="580" x2="600" y2="580" stroke="#1a1916" stroke-width="0.5" opacity="0.2"/>
+      <rect x="120" y="250" width="320" height="330" fill="none" stroke="#1a1916" stroke-width="0.8" opacity="0.35"/>
+      <line x1="120" y1="310" x2="440" y2="310" stroke="#1a1916" stroke-width="0.4" opacity="0.2"/>
+      <line x1="120" y1="370" x2="440" y2="370" stroke="#1a1916" stroke-width="0.4" opacity="0.2"/>
+      <line x1="120" y1="430" x2="440" y2="430" stroke="#1a1916" stroke-width="0.4" opacity="0.2"/>
+      <line x1="120" y1="490" x2="440" y2="490" stroke="#1a1916" stroke-width="0.4" opacity="0.2"/>
+      <line x1="200" y1="250" x2="200" y2="580" stroke="#1a1916" stroke-width="0.4" opacity="0.2"/>
+      <line x1="280" y1="250" x2="280" y2="580" stroke="#1a1916" stroke-width="0.4" opacity="0.2"/>
+      <line x1="360" y1="250" x2="360" y2="580" stroke="#1a1916" stroke-width="0.4" opacity="0.2"/>
+      <rect x="200" y="120" width="160" height="130" fill="none" stroke="#1a1916" stroke-width="0.8" opacity="0.35"/>
+      <line x1="200" y1="165" x2="360" y2="165" stroke="#1a1916" stroke-width="0.4" opacity="0.2"/>
+      <line x1="200" y1="210" x2="360" y2="210" stroke="#1a1916" stroke-width="0.4" opacity="0.2"/>
+      <line x1="280" y1="120" x2="280" y2="250" stroke="#1a1916" stroke-width="0.4" opacity="0.2"/>
+      <rect x="145" y="500" width="55" height="70" fill="#c9a96e" opacity="0.18"/>
+      <rect x="225" y="500" width="55" height="70" fill="#c9a96e" opacity="0.18"/>
+      <rect x="305" y="500" width="55" height="70" fill="#c9a96e" opacity="0.18"/>
+      <rect x="385" y="500" width="35" height="70" fill="#c9a96e" opacity="0.18"/>
+      <line x1="200" y1="120" x2="280" y2="60" stroke="#1a1916" stroke-width="0.6" opacity="0.25"/>
+      <line x1="360" y1="120" x2="280" y2="60" stroke="#1a1916" stroke-width="0.6" opacity="0.25"/>
+      <line x1="60" y1="250" x2="60" y2="580" stroke="#1a1916" stroke-width="0.5" opacity="0.2"/>
+      <text x="50" y="420" font-size="9" fill="#1a1916" opacity="0.3" font-family="DM Sans" transform="rotate(-90,50,420)">33.0 m</text>
+      <line x1="460" y1="600" x2="560" y2="600" stroke="#1a1916" stroke-width="0.8" opacity="0.3"/>
+      <text x="490" y="618" font-size="9" fill="#1a1916" opacity="0.3" font-family="DM Sans">0      10 m</text>
+      <circle cx="540" y="90" r="18" fill="none" stroke="#1a1916" stroke-width="0.5" opacity="0.2"/>
+      <text x="536" y="77" font-size="9" fill="#1a1916" opacity="0.4" font-family="DM Sans">N</text>
+    </svg>
+  </div>
+</div>
+
+<!-- SOFTWARE TOOLKIT MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <span class="accent">✦</span><span>ArchiCAD</span><span class="accent">✦</span><span>Autodesk Revit</span><span class="accent">✦</span><span>Enscape Rendering</span><span class="accent">✦</span><span>Adobe Photoshop</span><span class="accent">✦</span><span>Figma UI/UX</span><span class="accent">✦</span><span>Rayon</span>
+    <span class="accent">✦</span><span>ArchiCAD</span><span class="accent">✦</span><span>Autodesk Revit</span><span class="accent">✦</span><span>Enscape Rendering</span><span class="accent">✦</span><span>Adobe Photoshop</span><span class="accent">✦</span><span>Figma UI/UX</span><span class="accent">✦</span><span>Rayon</span>
+  </div>
+</div>
+
+<!-- WORK -->
+<section id="work">
+  <p class="section-label fade-up">Selected Design Projects</p>
+  <div class="work-grid fade-up">
+
+    <!-- Project 1 -->
+    <div class="work-card">
+      <div class="work-card-visual">
+        <svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg">
+          <rect fill="#e4dfd5" width="360" height="240"/>
+          <rect x="50" y="50" width="100" height="150" fill="none" stroke="#1a1916" stroke-width="0.7" opacity="0.35"/>
+          <rect x="160" y="90" width="150" height="110" fill="none" stroke="#1a1916" stroke-width="0.7" opacity="0.35"/>
+          <line x1="0" y1="200" x2="360" y2="200" stroke="#1a1916" stroke-width="0.5" opacity="0.15"/>
+        </svg>
+      </div>
+      <div class="work-card-meta">
+        <p class="work-card-year">Case Study Baseline</p>
+        <h3 class="work-card-title">Mixed-Use Development</h3>
+        <p class="work-card-type">Morphogenesis &amp; Density · Mombasa CBD</p>
+      </div>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="work-card">
+      <div class="work-card-visual">
+        <svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg">
+          <rect fill="#ddd9cf" width="360" height="240"/>
+          <polygon points="180,40 310,190 50,190" fill="none" stroke="#1a1916" stroke-width="0.7" opacity="0.35"/>
+          <line x1="0" y1="190" x2="360" y2="190" stroke="#1a1916" stroke-width="0.5" opacity="0.2"/>
+        </svg>
+      </div>
+      <div class="work-card-meta">
+        <p class="work-card-year">Conservation Studio</p>
+        <h3 class="work-card-title">Swahili Boutique Hotel</h3>
+        <p class="work-card-type">Heritage Architecture · Mombasa Old Town</p>
+      </div>
+    </div>
+
+    <!-- Project 3 -->
+    <div class="work-card">
+      <div class="work-card-visual">
+        <svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg">
+          <rect fill="#e8e3d9" width="360" height="240"/>
+          <rect x="40" y="60" width="280" height="140" fill="none" stroke="#1a1916" stroke-width="0.7" opacity="0.4"/>
+          <line x1="0" y1="200" x2="360" y2="200" stroke="#1a1916" stroke-width="0.5" opacity="0.15"/>
+        </svg>
+      </div>
+      <div class="work-card-meta">
+        <p class="work-card-year">Institutional Studio</p>
+        <h3 class="work-card-title">Faculty of Architecture &amp; Built Environment</h3>
+        <p class="work-card-type">Structural &amp; Institutional Design · TUK, Nairobi</p>
+      </div>
+    </div>
+
+    <!-- Project 4 -->
+    <div class="work-card">
+      <div class="work-card-visual">
+        <svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg">
+          <rect fill="#e0dbd1" width="360" height="240"/>
+          <ellipse cx="180" cy="120" rx="110" ry="70" fill="none" stroke="#1a1916" stroke-width="0.7" opacity="0.35"/>
+          <line x1="0" y1="190" x2="360" y2="190" stroke="#1a1916" stroke-width="0.5" opacity="0.15"/>
+        </svg>
+      </div>
+      <div class="work-card-meta">
+        <p class="work-card-year">Experimental Studio</p>
+        <h3 class="work-card-title">Ultra-Modern Shopping Mall</h3>
+        <p class="work-card-type">Commercial Typologies · South B, Nairobi</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- THE PRACTICE & PHILOSOPHY -->
+<section id="about" style="border-top: 0.5px solid var(--rule);">
+  <p class="section-label fade-up">Philosophy &amp; Profile</p>
+  <div class="about-split fade-up">
+    <div>
+      <h2 class="about-heading">Architecture as a <em>bridge</em> across eras.</h2>
+      <div class="stats">
+        <div>
+          <div class="stat-num">B.Arch</div>
+          <div class="stat-label">TUM Scholar</div>
+        </div>
+        <div>
+          <div class="stat-num">02</div>
+          <div class="stat-label">Industry Attachments</div>
+        </div>
+        <div>
+          <div class="stat-num">06+</div>
+          <div class="stat-label">Core Projects Designed</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="about-body">As an architectural designer shaped by the coastal fabric of Mombasa and the fast economic pace of Nairobi, my design approach focuses on sustainable developments that cleanly promote spatial values, context, and structural reason.</p>
+      <p class="about-body">I look to establish an intentional balance between rich vernacular design systems and clean modern technology. Using advanced 3D production frameworks, my goal is to explore spaces that thoughtfully prioritize local environmental context and individual well-being.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES & TECHNICAL PROFICIENCIES -->
+<section id="services" style="border-top: 0.5px solid var(--rule);">
+  <p class="section-label fade-up">Core Competencies</p>
+  <div class="services-list fade-up">
+    <div class="service-item">
+      <span class="service-name">Architectural Design &amp; Drafting</span>
+      <span class="service-tag">BIM Integrated (ArchiCAD / Revit)</span>
+    </div>
+    <div class="service-item">
+      <span class="service-name">Advanced Architectural Visualization</span>
+      <span class="service-tag">Enscape / Photorealistic Rendering</span>
+    </div>
+    <div class="service-item">
+      <span class="service-name">Vernacular &amp; Swahili Architectural Conservation</span>
+      <span class="service-tag">Contextual Heritage Studies</span>
+    </div>
+    <div class="service-item">
+      <span class="service-name">Digital Prototyping &amp; Layout Design</span>
+      <span class="service-tag">Figma / Adobe Suite</span>
+    </div>
+    <div class="service-item">
+      <span class="service-name">Typological Morphogenesis Analysis</span>
+      <span class="service-tag">Urban Density Masterplanning</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="contact-inner fade-up">
+    <h2 class="contact-big">Let us build<br/>something with<br/><em>structural balance.</em></h2>
+    <div class="contact-right">
+      <a class="contact-email" href="mailto:calebshihemi@gmail.com">calebshihemi@gmail.com</a>
+      <div class="contact-socials">
+        <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+        <a href="https://behance.net" target="_blank">Behance</a>
+        <a href="https://instagram.com" target="_blank">Instagram</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Busuku Caleb Shihemi. All rights reserved.</span>
+  <span>Mombasa — Nairobi, Kenya</span>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.1 });
+  document
